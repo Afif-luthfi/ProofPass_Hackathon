@@ -2,8 +2,10 @@
 
 Versi: 1.0
 Tanggal: 24 September 2026
-Status: spesifikasi MVP hackathon; belum merupakan fitur yang sudah dibangun
+Status: spesifikasi produk; fitur saat ini adalah prototipe lokal MVP
 Target: Build Week Hackathon Vol.2 — BOT Chain
+
+Catatan implementasi 24 September 2026: repo kini memiliki passport browser lokal untuk input manual, hash file lokal, pencatatan hash melalui MetaMask, dan tautan verifikasi mandiri. Metadata disimpan di local storage dan dibawa di tautan; belum ada database lintas perangkat atau ekstraksi AI. Kebutuhan persisten lintas perangkat dan layanan AI pada spesifikasi berikut tetap menjadi pekerjaan lanjutan.
 
 ## 1. Ringkasan produk
 

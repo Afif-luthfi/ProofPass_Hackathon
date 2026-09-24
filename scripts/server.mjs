@@ -7,11 +7,15 @@ import { rpc } from './rpc.mjs';
 const root = new URL('../', import.meta.url);
 const routes = {
   '/': ['web/index.html', 'text/html; charset=utf-8'],
+  '/passport.html': ['web/passport.html', 'text/html; charset=utf-8'],
+  '/passport.mjs': ['web/passport.mjs', 'text/javascript'],
+  '/passport.css': ['web/passport.css', 'text/css'],
   '/app.mjs': ['web/app.mjs', 'text/javascript'],
   '/style.css': ['web/style.css', 'text/css'],
   '/shared/networks.mjs': ['shared/networks.mjs', 'text/javascript'],
   '/shared/guards.mjs': ['shared/guards.mjs', 'text/javascript'],
   '/shared/deploy.mjs': ['shared/deploy.mjs', 'text/javascript'],
+  '/shared/metadata.mjs': ['shared/metadata.mjs', 'text/javascript'],
   '/artifact.json': ['artifacts/ProofPass.json', 'application/json'],
   '/ProofPass.sol': ['contracts/ProofPass.sol', 'text/plain; charset=utf-8'],
   '/vendor/ethers.js': ['node_modules/ethers/dist/ethers.min.js', 'text/javascript'],
@@ -27,12 +31,19 @@ export function validReadRequest(method, params) {
   if (method === 'eth_getBlockByNumber') return params.length === 2 && tag(params[0]) && params[1] === false;
   if (['eth_getBalance', 'eth_getCode', 'eth_getTransactionCount'].includes(method)) return params.length === 2 && address.test(params[0]) && tag(params[1]);
   if (['eth_getTransactionReceipt', 'eth_getTransactionByHash'].includes(method)) return params.length === 1 && hash.test(params[0]);
+  if (method === 'eth_call') {
+    const tx = params[0];
+    return params.length === 2 && tx && typeof tx === 'object' && !Array.isArray(tx)
+      && Object.keys(tx).every(k => ['to', 'data', 'from'].includes(k))
+      && address.test(tx.to) && typeof tx.data === 'string' && /^0x(?:[0-9a-f]{2})*$/i.test(tx.data)
+      && tx.data.length <= 20000 && (tx.from === undefined || address.test(tx.from)) && tag(params[1]);
+  }
   if (method === 'eth_estimateGas') {
     const tx = params[0];
     return params.length === 1 && tx && typeof tx === 'object' && !Array.isArray(tx)
-      && Object.keys(tx).every(k => ['from', 'data', 'value'].includes(k))
-      && address.test(tx.from) && typeof tx.data === 'string' && hex.test(tx.data)
-      && tx.data.length % 2 === 0 && tx.data.length < 50000 && tx.value === '0x0';
+      && Object.keys(tx).every(k => ['from', 'to', 'data', 'value'].includes(k))
+      && address.test(tx.from) && (tx.to === undefined || address.test(tx.to)) && typeof tx.data === 'string' && hex.test(tx.data)
+      && tx.data.length % 2 === 0 && tx.data.length < 50000 && (tx.value === undefined || tx.value === '0x0');
   }
   return false;
 }

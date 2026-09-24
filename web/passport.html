@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>ProofPass | Passport bukti</title>
+  <link rel="stylesheet" href="/passport.css">
+  <script type="module" src="/passport.mjs"></script>
+</head>
+<body>
+<main class="shell">
+  <header class="top"><a class="brand" href="/">ProofPass</a><div class="top-actions"><a href="/">Alat deploy</a><button id="theme" class="quiet" type="button">Tema gelap</button></div></header>
+  <section class="intro"><p class="eyebrow">PORTOFOLIO BUKTI</p><h1>Bukti kemampuan,<br>tercatat dengan jelas.</h1><p>Catat sertifikat atau pencapaian, simpan sidik jarinya di BOT Chain, lalu bagikan tautan verifikasi. File tetap di perangkatmu.</p></section>
+  <p id="notice" class="notice" role="status" aria-live="polite">Hubungkan MetaMask untuk mulai. Detail bukti hanya akan dicatat di browser ini dan di tautan yang kamu bagikan.</p>
+  <section class="panel connect-panel"><div><h2>Wallet</h2><p id="wallet-state">Belum terhubung</p></div><button id="connect" type="button">Hubungkan MetaMask</button></section>
+  <section id="viewer" class="panel" hidden aria-labelledby="viewer-title">
+    <p class="eyebrow">TAUTAN BUKTI</p><h2 id="viewer-title">Memeriksa bukti...</h2><div id="verification" class="checks"></div><div id="proof-view" class="proof-view"></div><div class="actions"><button id="copy-view" class="secondary" type="button">Salin tautan ini</button><label class="file-button secondary">Cocokkan file<input id="verify-file" type="file" accept=".pdf,.png,.jpg,.jpeg,application/pdf,image/png,image/jpeg"></label></div>
+  </section>
+  <section id="workspace" hidden>
+    <section class="panel network-panel"><div><h2>Jaringan</h2><p id="chain-status">Pilih jaringan dan cocokkan MetaMask.</p></div><div class="network-controls"><label for="network">Jaringan BOT</label><select id="network"><option value="testnet">BOT Chain Testnet · 968</option><option value="mainnet">BOT Chain Mainnet · 677</option></select><button id="switch" class="secondary" type="button">Ganti jaringan</button></div><label class="contract-label" for="contract">Alamat ProofPass yang sudah di-deploy</label><input id="contract" spellcheck="false" autocomplete="off" placeholder="0x..."><p class="hint">Alamatnya muncul setelah kontrak berhasil di-deploy lewat alat deploy. Pilih testnet untuk demo.</p></section>
+    <div class="columns">
+      <section class="panel form-panel"><p class="eyebrow">CATAT BUKTI</p><h2>Tambah pencapaian</h2><p class="hint">AI belum diaktifkan. Isi ringkasan sendiri; AI tidak dibutuhkan untuk mencatat atau memverifikasi bukti.</p>
+        <form id="proof-form"><label for="title">Nama sertifikat atau pencapaian <span aria-hidden="true">*</span></label><input id="title" maxlength="120" required placeholder="Contoh: Build Week Hackathon">
+          <label for="issuer">Penerbit yang tertulis</label><input id="issuer" maxlength="120" placeholder="Contoh: Girl Meets Tech">
+          <label for="date">Tanggal terbit</label><input id="date" type="date">
+          <label for="summary">Ringkasan</label><textarea id="summary" maxlength="700" rows="4" placeholder="Apa yang kamu pelajari atau kerjakan?"></textarea>
+          <label for="skills">Skill (pisahkan dengan koma)</label><input id="skills" maxlength="500" placeholder="Solidity, Product design, Research">
+          <label for="document">File bukti (opsional, maksimal 5 MB)</label><input id="document" type="file" accept=".pdf,.png,.jpg,.jpeg,application/pdf,image/png,image/jpeg"><p class="hint">Browser menghitung SHA-256. File tidak diunggah dan tidak tersimpan di blockchain.</p>
+          <div id="review" class="review" hidden></div><label class="consent"><input id="consent" type="checkbox"><span>Saya paham judul, penerbit, tanggal, ringkasan, skill, hash file, wallet, dan transaksi akan terlihat publik jika saya membagikan tautan.</span></label>
+          <button id="submit" type="submit">Periksa dan catat</button>
+        </form>
+      </section>
+      <section class="panel records-panel"><div class="records-head"><div><p class="eyebrow">WALLET INI</p><h2>Bukti tercatat</h2></div><button id="refresh" class="secondary" type="button">Muat ulang</button></div><div id="records"><p class="empty">Hubungkan wallet dan pilih kontrak untuk melihat catatan.</p></div></section>
+    </div>
+  </section>
+  <footer><p>ProofPass mencatat klaim dan sidik jari file. Ini tidak membuktikan identitas, keaslian sertifikat, atau dukungan dari penerbit.</p><a href="/ProofPass.sol">Lihat kontrak Solidity</a></footer>
+</main>
+</body>
+</html>

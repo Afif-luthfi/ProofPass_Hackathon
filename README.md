@@ -1,6 +1,6 @@
 # ProofPass
 
-ProofPass records wallet claims and document fingerprints on BOT Chain. This repository currently contains the Solidity contract, automated tests, and a local MetaMask diagnosis/deployment utility. It is not yet the complete skill-passport application described in [the PRD](PRD-ProofPass.md).
+ProofPass records wallet claims and document fingerprints on BOT Chain. The repository contains the Solidity contract, a local MetaMask deployment utility, and a browser-based passport for recording and checking proof links. See [the PRD](PRD-ProofPass.md) for product scope.
 
 The utility compares the chain ID and genesis block returned by MetaMask with the configured official BOT RPC. It reads the selected wallet's testnet and mainnet balances independently. This avoids relying on wallet token filters or Remix's displayed ETH label when identifying a network.
 
@@ -14,6 +14,10 @@ npm start
 ```
 
 Open http://127.0.0.1:4173 in the same browser/profile where MetaMask is installed. The application binds only to the local computer. The browser inside an AI desktop app may not have the MetaMask extension.
+
+Open http://127.0.0.1:4173/passport.html for the passport. First deploy the contract with the tool above, copy the confirmed contract address, connect MetaMask on the same BOT network, and enter that address in the passport. Select BOT Chain Testnet for a demo; testnet BOT is needed for transaction gas.
+
+The passport accepts a title, issuer label, date, summary, skills, and an optional PDF/PNG/JPG up to 5 MB. It hashes the original file locally and never uploads it. Review the fields before submitting; the transaction records only hashes on-chain. Metadata is kept in this browser's local storage and included in the share link. Anyone with the link can read those fields. If local browser storage is cleared, the blockchain entry remains, but its metadata needs the original share link. There is no hosted database or AI extraction integration in this MVP; manual entry works without an API key.
 
 1. Connect MetaMask. No signature or transaction is needed for this connection.
 2. Read the independent testnet and mainnet balances.
