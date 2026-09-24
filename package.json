@@ -1,0 +1,21 @@
+{
+  "name": "proofpass-deploy-kit",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.13.0" },
+  "scripts": {
+    "compile": "node scripts/compile.mjs",
+    "start": "node scripts/compile.mjs && node scripts/server.mjs",
+    "check:networks": "node scripts/check-networks.mjs",
+    "test": "node scripts/compile.mjs && node --test tests/*.test.mjs",
+    "test:browser": "playwright test"
+  },
+  "dependencies": { "ethers": "6.17.0" },
+  "overrides": { "solc": { "tmp": "0.2.7" } },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "hardhat": "3.17.0",
+    "solc": "0.8.37"
+  }
+}

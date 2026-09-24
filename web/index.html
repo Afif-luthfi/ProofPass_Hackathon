@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ProofPass | Wallet & Deploy</title>
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/app.mjs"></script>
+</head>
+<body>
+<main>
+  <header><p class="wordmark">ProofPass / Alat lokal</p><button id="theme" class="secondary" aria-pressed="false">Tema gelap</button></header>
+  <h1>Periksa wallet.<br>Siapkan contract.</h1>
+  <p class="intro">Cek jaringan dan saldo BOT, lalu deploy ProofPass lewat MetaMask. Persetujuan transaksi tetap ada di wallet kamu.</p>
+  <p class="note">Ini alat persiapan pengembangan. Aplikasi passport dan analisis sertifikat belum dibuat.</p>
+  <p id="status" role="status" aria-live="polite">Buka halaman ini di browser yang sudah memiliki ekstensi MetaMask.</p>
+
+  <section aria-labelledby="wallet-title">
+    <h2 id="wallet-title">Wallet yang terhubung</h2>
+    <div class="actions"><button id="connect" data-task>Hubungkan MetaMask</button><button id="check" data-task class="secondary" disabled>Cek ulang koneksi & saldo</button></div>
+    <dl><dt>Alamat wallet</dt><dd id="account" class="mono">Belum terhubung</dd><dt>Chain ID dari wallet</dt><dd id="wallet-chain">Belum diperiksa</dd></dl>
+    <div class="balances">
+      <div><h3>Testnet <span>968</span></h3><p id="balance-testnet">Hubungkan wallet untuk membaca saldo.</p><a id="explorer-testnet" hidden target="_blank" rel="noopener noreferrer">Lihat wallet di explorer testnet</a></div>
+      <div><h3>Mainnet <span>677</span></h3><p id="balance-mainnet">Hubungkan wallet untuk membaca saldo.</p><a id="explorer-mainnet" hidden target="_blank" rel="noopener noreferrer">Lihat wallet di explorer mainnet</a></div>
+    </div>
+    <p class="note">Saldo dibaca dari RPC resmi masing-masing jaringan. BOT testnet tidak menjadi saldo mainnet. Filter token di MetaMask belum tentu mengubah jaringan yang dipakai situs.</p>
+  </section>
+
+  <section aria-labelledby="network-title">
+    <h2 id="network-title">Jaringan tujuan</h2>
+    <label for="network">Mulai dari testnet untuk pengujian</label>
+    <select id="network" data-task><option value="testnet">BOT Chain Testnet (968)</option><option value="mainnet">BOT Chain Mainnet (677)</option></select>
+    <p id="rpc-label" class="mono">https://rpc.bohr.life</p>
+    <button id="switch" data-task class="secondary" disabled>Pilih jaringan ini di MetaMask</button>
+    <p id="network-status">Belum diperiksa. Chain ID dan identitas blockchain harus cocok dengan RPC resmi.</p>
+    <p class="note">Jika MetaMask menampilkan nama Datagram untuk ID 968, periksa URL RPC. Alat ini membandingkan blok awal jaringan; label atau simbol ETH saja tidak menentukan jaringan.</p>
+  </section>
+
+  <section aria-labelledby="deploy-title">
+    <h2 id="deploy-title">Deploy ProofPass</h2>
+    <p>Contract menyimpan hash bukti dan wallet pencatat. Tidak menerima deposit BOT. Hanya biaya gas yang diperlukan.</p>
+    <p><a href="/ProofPass.sol" target="_blank" rel="noopener noreferrer">Baca kode ProofPass.sol</a></p>
+    <p id="build-info" class="note">Membaca hasil compile...</p>
+    <button id="estimate" data-task class="secondary" disabled>Periksa biaya deploy</button>
+    <p id="fee">Belum ada estimasi. Hubungkan wallet dan pilih jaringan dahulu.</p>
+    <label class="check"><input id="confirm" type="checkbox" data-task disabled><span>Saya sudah memeriksa jaringan dan biaya. Lanjutkan permintaan deploy ke MetaMask.</span></label>
+    <p id="mainnet-note" class="note" hidden>Mainnet memakai BOT bernilai nyata. Alat ini memerlukan deployment testnet dari build yang sama terlebih dahulu.</p>
+    <button id="deploy" data-task disabled>Kirim permintaan deploy</button>
+  </section>
+
+  <section aria-labelledby="receipt-title">
+    <h2 id="receipt-title">Hasil deployment</h2>
+    <p id="receipt-status">Belum ada transaksi untuk jaringan ini.</p>
+    <dl id="receipt-details" hidden><dt>Transaksi</dt><dd><a id="tx-link" class="mono" target="_blank" rel="noopener noreferrer"></a></dd><dt>Alamat contract</dt><dd id="contract-address" class="mono">Menunggu konfirmasi</dd></dl>
+    <div class="actions"><button id="receipt-check" data-task class="secondary" disabled>Cek status transaksi</button><button id="download" class="secondary" disabled>Unduh catatan deployment</button></div>
+    <p class="note">Riwayat disimpan pada browser ini. Unduh catatan setelah berhasil. Refresh tidak mengirim transaksi baru.</p>
+    <details><summary>Pulihkan transaksi dengan hash</summary><p>Gunakan jika transaksi sudah dikirim tetapi hasilnya belum tercatat di halaman. Hubungkan wallet pengirim dan pilih jaringan yang benar.</p><label for="restore-hash">Hash transaksi deployment</label><input id="restore-hash" placeholder="0x..." autocomplete="off" spellcheck="false"><button id="restore" data-task class="secondary" disabled>Periksa transaksi ini</button></details>
+  </section>
+  <footer><a href="https://dev-docs.botchain.ai/docs/Developers/quick-guide/" target="_blank" rel="noopener noreferrer">Konfigurasi resmi BOT Chain</a><p>Alat ini tidak meminta seed phrase atau private key.</p></footer>
+</main>
+</body>
+</html>
